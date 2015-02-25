@@ -123,6 +123,18 @@ c2corg.tree.LayerTree = Ext.extend(Ext.tree.TreePanel, {
         });
     },
 
+    createWMSLayer: function(options) {
+        return new OpenLayers.Layer.WMS(options.name, this.url, {
+            layers: options.layers,
+            transparent: true
+        },{
+            opacity: 0.7,
+            singleTile: true,
+            isBaseLayer: false,
+            visibility: false
+        });
+    },
+
     addLayers: function() {
         this.layers = {
             "summits": this.createVectorLayer({name: "summits", featureType: "summits"}),
@@ -138,7 +150,8 @@ c2corg.tree.LayerTree = Ext.extend(Ext.tree.TreePanel, {
             "maps": this.createVectorLayer({name: "maps", featureType: "maps"}),
             "ranges": this.createVectorLayer({name: "ranges", featureType: "ranges"}),
             "admin_limits": this.createVectorLayer({name: "admin_limits", featureType: "admin_limits"}),
-            "countries": this.createVectorLayer({name: "countries", featureType: "countries"})
+            "countries": this.createVectorLayer({name: "countries", featureType: "countries"}),
+            "slopes": this.createWMSLayer({name: "slopes", layers: "slopes"})
         };
         for (var i in this.layers) {
             this.mapPanel.map.addLayer(this.layers[i]);
@@ -241,6 +254,12 @@ c2corg.tree.LayerTree = Ext.extend(Ext.tree.TreePanel, {
                 nodeType: "gx_layer",
                 layer: this.layers["maps"],
                 iconCls: "picto_maps",
+                leaf: true
+            }, {
+                text: OpenLayers.i18n("slopes"),
+                nodeType: "gx_layer",
+                layer: this.layers["slopes"],
+                iconCls: "picto_blank",
                 leaf: true
             }, {
                 text: OpenLayers.i18n("areas"),
