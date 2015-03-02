@@ -128,7 +128,7 @@ c2corg.tree.LayerTree = Ext.extend(Ext.tree.TreePanel, {
             layers: options.layers,
             transparent: true
         },{
-            opacity: 0.7,
+            opacity: 0.6,
             singleTile: true,
             isBaseLayer: false,
             visibility: false
@@ -137,6 +137,7 @@ c2corg.tree.LayerTree = Ext.extend(Ext.tree.TreePanel, {
 
     addLayers: function() {
         this.layers = {
+            "slopes": this.createWMSLayer({name: "slopes", layers: "slopes"}),
             "summits": this.createVectorLayer({name: "summits", featureType: "summits"}),
             "access": this.createVectorLayer({name: "access", featureType: "access"}),
             "public_transportations": this.createVectorLayer({name: "public_transportations", featureType: "public_transportations"}),
@@ -150,8 +151,7 @@ c2corg.tree.LayerTree = Ext.extend(Ext.tree.TreePanel, {
             "maps": this.createVectorLayer({name: "maps", featureType: "maps"}),
             "ranges": this.createVectorLayer({name: "ranges", featureType: "ranges"}),
             "admin_limits": this.createVectorLayer({name: "admin_limits", featureType: "admin_limits"}),
-            "countries": this.createVectorLayer({name: "countries", featureType: "countries"}),
-            "slopes": this.createWMSLayer({name: "slopes", layers: "slopes"})
+            "countries": this.createVectorLayer({name: "countries", featureType: "countries"})
         };
         for (var i in this.layers) {
             this.mapPanel.map.addLayer(this.layers[i]);
